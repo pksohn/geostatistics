@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Folder>
+    <name>Rainfall Predictions</name>
+    <GroundOverlay>
+      <name>Rainfall predictions</name>
+      <Icon>
+        <href>sim.png</href>
+      </Icon>
+      <LatLonBox>
+        <north>42.07</north>
+        <south>32.604999999999997</south>
+        <east>-114.48999999999999</east>
+        <west>-124.25</west>
+        <rotation>-0.1556640799496235</rotation>
+      </LatLonBox>
+    </GroundOverlay>
+  </Folder>
+</kml>
