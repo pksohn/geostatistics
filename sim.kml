@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2">
+    <Document id="feat_1">
+        <GroundOverlay id="feat_2">
+            <name>GroundOverlay</name>
+            <Icon id="link_0">
+                <href>sim.png</href>
+            </Icon>
+            <LatLonBox>
+                <north>42.07</north>
+                <south>32.605</south>
+                <east>-114.49</east>
+                <west>-124.25</west>
+            </LatLonBox>
+        </GroundOverlay>
+    </Document>
+</kml>

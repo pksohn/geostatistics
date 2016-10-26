@@ -1,6 +1,7 @@
 import numpy as np
 from scipy import spatial
 import matplotlib.pyplot as plt
+import simplekml
 
 
 def sq_exponential(x, y, l):
@@ -90,7 +91,7 @@ class SimpleKriging(object):
             return predictions
 
     def simulate(self, bbox, ncells, l, sigma, gamma=0.001, indices=False, cov_function=sq_exponential,
-                 show_visual=False, save_visual=None):
+                 show_visual=False, save_kml=None):
 
         grid = make_grid(bounding_box=bbox, ncell=ncells)
 
@@ -102,17 +103,31 @@ class SimpleKriging(object):
 
         result = prediction[:, -1] + L.dot(u)
 
-        if show_visual or save_visual:
+        if show_visual:
             y = grid[:, 0]
             x = grid[:, 1]
             plt.scatter(x, y, c=result)
-            if save_visual:
-                plt.axis('off')
-                plt.savefig(save_visual, format='png', bbox_inches='tight')
             plt.colorbar(ticks=[np.min(result), np.max(result)], label='Rainfall in mm')
-            if show_visual:
-                plt.axis('on')
-                plt.show()
+            plt.show()
+
+        if save_kml:
+            fig, ax = plt.subplots(1)
+            fig.subplots_adjust(left=0, right=1, bottom=0, top=1)
+            y = grid[:, 0]
+            x = grid[:, 1]
+            ax.scatter(x, y, c=result, s=50, edgecolors='', marker='s', alpha=0.5)
+            ax.axis([bbox[2], bbox[3], bbox[0], bbox[1]])
+            ax.axis('off')
+            plt.savefig('{}.png'.format(save_kml))
+
+            kml = simplekml.Kml()
+            ground = kml.newgroundoverlay(name='GroundOverlay')
+            ground.icon.href = '{}.png'.format(save_kml)
+            ground.latlonbox.north = bbox[1]
+            ground.latlonbox.south = bbox[0]
+            ground.latlonbox.east = bbox[3]
+            ground.latlonbox.west = bbox[2]
+            kml.save('{}.kml'.format(save_kml))
 
         if indices:
             return np.concatenate((grid, result[:, None]), axis=1)
